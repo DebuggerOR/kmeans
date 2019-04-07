@@ -110,7 +110,7 @@ def kmeans(X, k):
         centroids = update_centroids(centroids, clusters)
         # print
         print_iter(i + 1, centroids)
-    #print_image('dog.jpeg', centroids)
+    print_image('dog.jpeg', centroids)
 
 
 if __name__ == "__main__":
