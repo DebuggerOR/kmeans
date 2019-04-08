@@ -53,10 +53,14 @@ def print_iter(t, centroids):
             first = 0
         else:
             output += ", ["
-        output += str(round(c[0], 2))
+        output += str(np.floor(c[0] * 100) / 100)
         for i in range(1, dim):
             output += ", " + str(np.floor(c[i] * 100) / 100)
         output += "]"
+    # add to fix prints
+    output = output.replace("0.0,", "0.,")
+    output = output.replace("0.0]", "0.]")
+    # print iter
     print(output)
 
 
@@ -119,5 +123,5 @@ if __name__ == "__main__":
     # run kmeans on X with 2, 4, 8, 16 clusters
     k_arr = [2, 4, 8, 16]
     for k in k_arr:
-        print("k=" + str(k))
+        print("k=" + str(k) + ":")
         kmeans(X, k)
