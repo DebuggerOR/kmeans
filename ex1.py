@@ -43,23 +43,22 @@ def euclid_dst(p1, p2):
     return math.sqrt(sqr_dst)
 
 
-def print_loss(centroids, X):
+def print_loss(clusters, centroids, X):
+    # init k and sum
+    k = len(clusters)
     sum = 0
-    # for all points in X
-    for point in X:
-        min_dst = float('inf')
-        # find closest centroid
-        for i in range(k):
-            dst = euclid_dst(point, centroids[i])
-            if dst < min_dst:
-                min_dst = dst
-        #
-        sum += min_dst
-    print(min_dst / len(X))
+    # sum dst from point to it's centroid
+    for i in range(k):
+        for point in clusters[i]:
+            sum += euclid_dst(point, centroids[i])
+    # print avg of sdt
+    print(sum / len(X))
 
 
 def print_iter(t, centroids):
+    # determine dim of points
     dim = len(centroids[0])
+    # format is 'iter 1: [0.01, 0.01, 0.01], [0.41, 0.36, 0.32]'
     output = "iter " + str(t) + ":"
     first = 1
     for c in centroids:
@@ -72,7 +71,7 @@ def print_iter(t, centroids):
         for i in range(1, dim):
             output += ", " + str(np.floor(c[i] * 100) / 100)
         output += "]"
-    # add to fix prints
+    # replace to fix prints
     output = output.replace("0.0,", "0.,")
     output = output.replace("0.0]", "0.]")
     # print iter
@@ -127,8 +126,8 @@ def kmeans(X, k):
         # update clusters and centroids
         clusters = divide_clusters(centroids)
         centroids = update_centroids(centroids, clusters)
-        # print_loss(centroids, X)
-        print_iter(i + 1, centroids)
+        print_loss(clusters, centroids, X)
+        # print_iter(i + 1, centroids)
     # print_image('dog.jpeg', centroids)
 
 
