@@ -43,8 +43,7 @@ def euclid_dst(p1, p2):
     return math.sqrt(sqr_dst)
 
 
-def print_loss(t, centroids, X):
-    output = "iter " + str(t) + ":"
+def print_loss(centroids, X):
     sum = 0
     # for all points in X
     for point in X:
@@ -56,8 +55,7 @@ def print_loss(t, centroids, X):
                 min_dst = dst
         #
         sum += min_dst
-    output += " " + str(min_dst / len(X))
-    print(output)
+    print(min_dst / len(X))
 
 
 def print_iter(t, centroids):
@@ -129,10 +127,9 @@ def kmeans(X, k):
         # update clusters and centroids
         clusters = divide_clusters(centroids)
         centroids = update_centroids(centroids, clusters)
-        # print
-        print_loss(i + 1, centroids, X)
-        # print_iter(i + 1, centroids)
-    print_image('dog.jpeg', centroids)
+        # print_loss(centroids, X)
+        print_iter(i + 1, centroids)
+    # print_image('dog.jpeg', centroids)
 
 
 if __name__ == "__main__":
