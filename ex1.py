@@ -139,3 +139,4 @@ if __name__ == "__main__":
     for k in k_arr:
         print("k=" + str(k) + ":")
         kmeans(X, k)
+
