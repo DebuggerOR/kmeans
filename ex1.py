@@ -5,10 +5,6 @@ from init_centroids import init_centroids
 import matplotlib.pyplot as plt
 
 
-# ori fogler
-# 318732484
-
-
 def show_image(path, centroids):
     k = len(centroids)
     A = imread(path)
