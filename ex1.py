@@ -1,11 +1,15 @@
 import numpy as np
 import math
-from scipy.misc import imread
+from matplotlib.pyplot import imread
 from init_centroids import init_centroids
 import matplotlib.pyplot as plt
 
 
-def print_image(path, centroids):
+# ori fogler
+# 318732484
+
+
+def show_image(path, centroids):
     k = len(centroids)
     A = imread(path)
     A_norm = A.astype(float) / 255.
@@ -43,15 +47,15 @@ def euclid_dst(p1, p2):
     return math.sqrt(sqr_dst)
 
 
-def print_loss(clusters, centroids, X):
+def print_avg_loss(clusters, centroids, X):
     # init k and sum
     k = len(clusters)
     sum = 0
-    # sum dst from point to it's centroid
+    # sum square dst from point to it's centroid
     for i in range(k):
         for point in clusters[i]:
-            sum += euclid_dst(point, centroids[i])
-    # print avg of sdt
+            sum += (euclid_dst(point, centroids[i]))
+    # print avg of loss
     print(sum / len(X))
 
 
@@ -75,6 +79,20 @@ def print_iter(t, centroids):
     output = output.replace("0.0,", "0.,")
     output = output.replace("0.0]", "0.]")
     # print iter
+    print(output)
+
+
+def print_iter2(t, cent):
+    # official printing func
+    output = "iter " + str(t) + ": "
+    if type(cent) == list:
+        cent = np.asarray(cent)
+    if len(cent.shape) == 1:
+        output += ' '.join(str(np.floor(100*cent)/100).split()).replace('[ ', '[').\
+            replace('\n', ' ').replace(' ]',']').replace(' ', ', ')
+    else:
+        output += ' '.join(str(np.floor(100*cent)/100).split()).replace('[ ', '[').\
+            replace('\n', ' ').replace(' ]',']').replace(' ', ', ')[1:-1]
     print(output)
 
 
@@ -120,15 +138,16 @@ def kmeans(X, k):
     centroids = init_centroids(X, k)
     num_iters = 10
     # print init centroids
-    # print_iter(0, centroids)
+    print_iter(0, centroids)
     # iterate num iterations
     for i in range(num_iters):
         # update clusters and centroids
         clusters = divide_clusters(centroids)
         centroids = update_centroids(centroids, clusters)
-        print_loss(clusters, centroids, X)
+        # print_avg_loss(clusters, centroids, X)
         # print_iter(i + 1, centroids)
-    # print_image('dog.jpeg', centroids)
+        print_iter2(i + 1, centroids)
+    # show_image('dog.jpeg', centroids)
 
 
 if __name__ == "__main__":
@@ -139,4 +158,3 @@ if __name__ == "__main__":
     for k in k_arr:
         print("k=" + str(k) + ":")
         kmeans(X, k)
-
