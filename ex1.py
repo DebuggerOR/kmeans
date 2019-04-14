@@ -50,7 +50,7 @@ def print_avg_loss(clusters, centroids, X):
     # sum square dst from point to it's centroid
     for i in range(k):
         for point in clusters[i]:
-            sum += (euclid_dst(point, centroids[i]))
+            sum += (euclid_dst(point, centroids[i]) ** 2)
     # print avg of loss
     print(sum / len(X))
 
