@@ -147,7 +147,7 @@ def kmeans(X, k):
 
 
 if __name__ == "__main__":
-    image_path = 'dog.jpeg'
+    image_path = 'dog_3.jpeg'
     X = load_image(image_path)
     # run kmeans on X with 2, 4, 8, 16 clusters
     k_arr = [2, 4, 8, 16]
